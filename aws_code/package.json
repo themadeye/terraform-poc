@@ -1,0 +1,48 @@
+{
+  "name": "terraform-demo",
+  "version": "1.0.0",
+  "description": "A sample and simple application for demo Terraform",
+  "main": "src/funny-demo.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c rollup.config.mjs --logLevel debug"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "author": "Walking Peanut",
+  "license": "ISC",
+  "dependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^22.7.7",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1691.0",
+    "rollup": "4.25.0",
+    "rollup-plugin-bundle-summary": "^1.0.3",
+    "rollup-plugin-delete": "^2.1.0",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "tsc": "^2.0.4",
+    "tslib": "^2.8.1",
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "madge": "^8.0.0"
+  }
+}
