@@ -1,31 +1,35 @@
-import {APIGatewayProxyEvent, APIGatewayProxyResult, Context} from "aws-lambda";
-import {S3} from "aws-sdk";
+import {APIGatewayProxyEventV2, APIGatewayProxyResult, Context} from 'aws-lambda';
+import { Upload } from "@aws-sdk/lib-storage";
+import { S3Client, S3 } from '@aws-sdk/client-s3';
 
-export const handler = async (event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult> => {
+export const handler = async (event: APIGatewayProxyEventV2, context: Context): Promise<APIGatewayProxyResult> => {
     try {
-        const s3Bucket = new S3({ signatureVersion: 'v4'});
+        console.log("Event: ", event)
+        const s3Bucket = new S3Client({});
         const bucketName: string = 'leon-sample-store';
-        const expirationInSeconds: number = 120;
-        const filename: string = event.queryStringParameters!.fileName!;
+        const filename: string = event.queryStringParameters!.name!;
 
-        const payload = {
-            Bucket: bucketName,
-            Key: filename,
-            ContentType: 'multipart/form-data',
-            Expires: expirationInSeconds
-        };
+        const uploadToS3 = new Upload({
+            client: s3Bucket,
+            params: {
+                Bucket: bucketName,
+                Key: filename,
+                Body: event.body
+            }
+        })
 
-        console.log("File payload: ", payload);
+        uploadToS3.on('httpUploadProgress', (progress) => {
+            console.log('Upload progress: ', progress)
+        });
 
-        const preSignedUrl = s3Bucket.getSignedUrl('putObject', payload);
-
+        await uploadToS3.done();
         return {
             statusCode: 200,
             headers: {
                 "access-control-allow-origin": "*"
             },
             body: JSON.stringify({
-                fileUploadURL: preSignedUrl
+                // fileUploadURL: preSignedUrl
             })
         }
     } catch (err) {

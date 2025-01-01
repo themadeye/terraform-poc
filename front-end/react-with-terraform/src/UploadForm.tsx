@@ -9,7 +9,7 @@ const FileUpload  = () => {
         setFile(event.target.files[0])
     }
 
-    const onFileUpload = async () => {
+    const onFileUpload = async() => {
         // Create an object of formData
         const formData = new FormData();
 
@@ -24,7 +24,7 @@ const FileUpload  = () => {
         console.log(file);
 
         // Request made to the backend api
-        const response = await axios.post(`${endpoint}/upload`, formData);
+        const response = await axios.post(`${endpoint}/upload?name=${file!.name}`, formData);
         console.log("Uploading response: ", response);
     }
 

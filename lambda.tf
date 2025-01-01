@@ -1,14 +1,14 @@
 # Fetch our file from the local file system
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "./aws_code/dist/funny-demo.js"
+  source_dir = "./aws_code/dist/funny-demo"
   output_path = "./aws_code/dist/funny-demo.zip"
 }
 
 # Fetch our file from the local file system
 data "archive_file" "s3-lambda" {
   type        = "zip"
-  source_file = "./aws_code/dist/s3-upload.js"
+  source_dir = "./aws_code/dist/s3-upload"
   output_path = "./aws_code/dist/s3-upload.zip"
 }
 

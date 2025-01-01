@@ -15,25 +15,21 @@ export default {
     },
     output: {
         dir: 'dist',
-        entryFileNames: '[name].js',
+        entryFileNames: '[name]/[name].js',
         chunkFileNames: "assets/[name].js",
-        sourcemap: 'inline'
+        sourcemap: 'inline',
+        format: 'cjs',
     },
     plugins: [
         del({ targets: 'dist/*' }), // Delete the folder once
         resolve({
-            browser: true,
+            browser: false,
             extensions: ['.js', '.ts']
         }),
-        commonjs({
-            extensions: ['.js', '.ts'],
-            include: [
-                'node_modules/**',
-            ],
-        }),
-        typescript({ compilerOptions: { module: 'CommonJS' } }),
+        commonjs(),
+        typescript(),
         json(),
-        nodePolyfills(),
+        // nodePolyfills(),
         terser(),
         summary()
     ]
