@@ -22,14 +22,14 @@ export const handler = async (event: APIGatewayProxyEventV2, context: Context): 
             console.log('Upload progress: ', progress)
         });
 
-        await uploadToS3.done();
+        const response = await uploadToS3.done();
         return {
             statusCode: 200,
             headers: {
                 "access-control-allow-origin": "*"
             },
             body: JSON.stringify({
-                // fileUploadURL: preSignedUrl
+                fileUploadResponse: response
             })
         }
     } catch (err) {

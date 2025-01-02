@@ -26,6 +26,12 @@ resource "aws_s3_bucket_policy" "admin-policy" {
   EOF
 }
 
+resource "aws_s3_bucket_public_access_block" "leon-sample-store-pb-access" {
+  bucket = aws_s3_bucket.sampleStore.id
+  block_public_acls   = false
+  block_public_policy = false
+}
+
 resource "aws_s3_bucket_cors_configuration" "default-cors" {
   bucket = aws_s3_bucket.sampleStore.id
   cors_rule {

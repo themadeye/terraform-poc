@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "declaration": true,
+    "declaration": false,
     "esModuleInterop": false,
     "lib": ["ES2020.Promise"],
     "module": "commonjs",
@@ -10,7 +10,6 @@
     "noEmitOnError": true,
     "outDir": "dist",
     "pretty": true,
-    "sourceMap": true,
     "types": [
       "node"
     ],

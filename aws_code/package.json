@@ -4,7 +4,8 @@
   "description": "A sample and simple application for demo Terraform",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "clean": "cd dist && rm -rf * && mkdir funny-demo s3-upload",
+    "build": "npm run clean && tsc && mv ./dist/s3-upload.js ./dist/s3-upload/s3-upload.js && mv ./dist/funny-demo.js ./dist/funny-demo/funny-demo.js"
   },
   "browserslist": {
     "production": [
