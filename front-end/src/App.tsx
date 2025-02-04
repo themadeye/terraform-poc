@@ -1,27 +1,29 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+
+import ProtectedRoute from './ProtectedRoute.tsx';
+
+import FileUpload from './components/UploadForm.tsx';
+import AuthProvider from './contexts/AuthContext.tsx';
+import Login from './components/LoginForm.tsx';
+
 import './App.css'
-import FileUpload from "./UploadForm.tsx";
 
 function App() {
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <FileUpload />
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      return (
+            <div className="App">
+                <BrowserRouter>
+                    <AuthProvider>
+                        <Routes>
+                            <Route path='/login' element={<Login />} />
+                            <Route element={<ProtectedRoute />}>
+                                <Route path='/upload' element={<FileUpload />}/>
+                            </Route>
+                        </Routes>
+                    </AuthProvider>
+                </BrowserRouter>
+            </div>
+      )
 }
 
 export default App

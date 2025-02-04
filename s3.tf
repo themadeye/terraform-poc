@@ -5,6 +5,13 @@ resource "aws_s3_bucket" "sampleStore" {
   }
 }
 
+resource "aws_s3_bucket_versioning" "sample_store_versioning" {
+  bucket = aws_s3_bucket.sampleStore.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_policy" "admin-policy" {
   bucket = aws_s3_bucket.sampleStore.id
   policy = <<EOF

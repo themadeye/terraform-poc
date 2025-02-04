@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import '../App.css'
 import axios from 'axios';
+import reactLogo from '../assets/react.svg';
 
 const FileUpload  = () => {
     const endpoint = 'https://n38wiq5pie.execute-api.us-east-1.amazonaws.com/dev'
@@ -30,6 +32,12 @@ const FileUpload  = () => {
 
     return (
         <>
+            <div>
+                <a href="https://react.dev" target="_blank">
+                    <img src={reactLogo} className="logo react" alt="React logo"/>
+                </a>
+            </div>
+            <h1>Vite + React</h1>
             <h3>File Upload using React!</h3>
             <div>
                 <input type="file" onChange={onFileChange}/>
