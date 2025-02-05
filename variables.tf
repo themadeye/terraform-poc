@@ -33,6 +33,15 @@ variable "mongodb-project-name" {
    The name of the project you want to create.
    HEREDOC
   type        = string
+  default     = "terraform-poc"
+}
+
+variable "mongodb-cluster-name" {
+  description = <<HEREDOC
+   The name of the cluster you want to create.
+   HEREDOC
+  type        = string
+  default     = "TerraformPocCluster"
 }
 
 variable "mongodb-teams" {
@@ -120,6 +129,38 @@ variable "limits" {
   }))
   default = []
 }
+
+variable "atlas_cluster_version" {
+  description = "Version of the MongoDB cluster to deploy"
+  type        = string
+  default     = "5.0"
+}
+
+variable "atlas_cluster_provider_name" {
+  description = "Cloud provider for this resource"
+  type        = string
+  default     = "TENANT"
+}
+
+variable "atlas_cluster_backing_provider" {
+  description = "Cloud provider for this resource"
+  type        = string
+  default     = "AWS"
+}
+
+# See https://www.mongodb.com/docs/atlas/reference/amazon-aws/
+variable "atlas_cluster_region" {
+  description = "Mongo Atlas region name (physical location of your MongoDB cluster)"
+  type        = string
+  default     = "US_EAST_1"
+}
+
+variable "atlas_cluster_size_name" {
+  description = "Type of the MongoDB cluster to deploy"
+  type        = string
+  default     = "M0"
+}
+
 variable "atlas_public_key" {
   description = <<HEREDOC
    The public key of the Atlas user you want to use to create the project.
