@@ -1,11 +1,12 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
-
-import db from './models/index';
 import cors from 'cors';
 
 import {ConnectionOptions} from 'node:tls';
 import {Express} from 'express';
+
+import db from './models/index';
+import UsersController from './controllers/users.controller';
 
 const app: Express = express();
 const corsOptions = {
@@ -30,6 +31,8 @@ db.mongoose.connect(db.url, {
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to TPOC." });
 });
+
+UsersController(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;

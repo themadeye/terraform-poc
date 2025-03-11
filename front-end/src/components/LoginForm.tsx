@@ -2,15 +2,18 @@ import { useState } from 'react';
 
 const Login = () => {
     const [input, setInput] = useState({
-        username: "",
+        email: "",
         password: "",
+        lastname: "",
+        firstname: ""
     });
 
     const handleSubmitEvent = (e: any) => {
         e.preventDefault();
-        if (input.username !== "" && input.password !== "") {
+        if (input.email !== "" && input.password !== "") {
             //dispatch action from hooks
         }
+        console.log("Input: ", input);
         alert("please provide a valid input");
     };
 
@@ -52,6 +55,28 @@ const Login = () => {
                 <div id="user-password" className="sr-only">
                     your password should be more than 6 character
                 </div>
+            </div>
+            <div className="form_control">
+                <label htmlFor="firstname">First name:</label>
+                <input
+                    type="firstname"
+                    id="firstname"
+                    name="firstname"
+                    aria-describedby="user-firstname"
+                    aria-invalid="false"
+                    onChange={handleInput}
+                />
+            </div>
+            <div className="form_control">
+                <label htmlFor="lastname">Last name:</label>
+                <input
+                    type="lastname"
+                    id="lastname"
+                    name="lastname"
+                    aria-describedby="user-lastname"
+                    aria-invalid="false"
+                    onChange={handleInput}
+                />
             </div>
             <button className="btn-submit">Submit</button>
         </form>

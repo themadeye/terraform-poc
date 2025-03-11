@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 
 import ProtectedRoute from './ProtectedRoute.tsx';
 
@@ -15,6 +15,7 @@ function App() {
                 <BrowserRouter>
                     <AuthProvider>
                         <Routes>
+                            <Route path="/" element={<Navigate to="/login" />}/>
                             <Route path='/login' element={<Login />} />
                             <Route element={<ProtectedRoute />}>
                                 <Route path='/upload' element={<FileUpload />}/>
