@@ -1,5 +1,6 @@
 data "mongodbatlas_roles_org_id" "org" {}
 
+# Mongodb project
 resource "mongodbatlas_project" "terraform-poc" {
   name = var.mongodb-project-name
   org_id = data.mongodbatlas_roles_org_id.org.org_id
@@ -28,6 +29,7 @@ resource "mongodbatlas_project" "terraform-poc" {
   is_schema_advisor_enabled                        = var.is_schema_advisor_enabled
 }
 
+# Mongodb project cluster
 resource "mongodbatlas_cluster" "poc-cluster" {
   project_id   = mongodbatlas_project.terraform-poc.id
   name         = var.mongodb-cluster-name
@@ -40,5 +42,18 @@ resource "mongodbatlas_cluster" "poc-cluster" {
 
   lifecycle {
     prevent_destroy = true
+  }
+}
+
+# Mongodb database user
+resource "mongodbatlas_database_user" "terraform-admin" {
+  username           = var.mongodb-database-user-name
+  password           = var.mongodb-database-user-password
+  project_id         = mongodbatlas_project.terraform-poc.id
+  auth_database_name = "admin"
+
+  roles {
+    role_name     = "readWrite"
+    database_name = var.mongodb-cluster-name
   }
 }

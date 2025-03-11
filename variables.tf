@@ -44,6 +44,22 @@ variable "mongodb-cluster-name" {
   default     = "TerraformPocCluster"
 }
 
+variable "mongodb-database-user-name" {
+  description = <<HEREDOC
+   The name of the database user you want to create.
+   HEREDOC
+  type        = string
+  default     = "poc-admin"
+}
+
+variable "mongodb-database-user-password" {
+  description = <<HEREDOC
+   The password of the database user you want to create.
+   HEREDOC
+  type        = string
+  default     = "admin123"
+}
+
 variable "mongodb-teams" {
   description = <<HEREDOC
    The list of teams that belong to the project.

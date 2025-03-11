@@ -4,19 +4,21 @@
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "esModuleInterop": false,
-    "lib": ["ES2020.Promise"],
+    "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
-    "outDir": "dist",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "sourceMap": true,
+    "skipLibCheck": true,
     "pretty": true,
     "types": [
       "node"
     ],
-    "rootDir": "src",
     "strict": true,
-    "target": "es6"
+    "target": "es2020"
   },
-  "exclude": ["dist", "node_modules"],
+  "exclude": ["dist"],
   "include": ["src"]
 }
