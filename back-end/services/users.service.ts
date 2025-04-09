@@ -1,7 +1,5 @@
 import db from '../models/index';
-import * as jwt from 'jsonwebtoken';
-
-import {compareSync, genSaltSync, hashSync} from "bcrypt-ts";
+import {createJWT, generatePassword, verifyJWT, verifyPassword} from './utils';
 
 const Users = db.users;
 
@@ -11,21 +9,24 @@ export const create = async (req: any, res: any) => {
         return;
     }
 
-    const isExisted = await isUserExisted(req.body.email);
+    const isExisted = await isUserExisted(req.body.email).catch(err => {
+        console.error(err);
+        res.status(500).send({ message: `Internal server error: ${err}`});
+    });
     if (isExisted) {
         res.status(409).send({ message: `User already existed! ${req.req.body.email}` });
         return;
     }
 
-    const salt = genSaltSync(10);
-    const hasedPassword = hashSync(req.body.password, salt);
+    const saltAndPassword = generatePassword(req.body.password)
 
     // Create a User
     const user = new Users({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: hasedPassword
+        password: saltAndPassword.hash,
+        salt: saltAndPassword.salt
     });
 
     // Save Users in the database
@@ -60,7 +61,7 @@ export const findOneByEmail = async (req: any, res: any) => {
         if (!user) {
             res.status(403).send({ message: "Email or Password incorrect" });
         }
-        const isCorrectPassword = compareSync(password, user!.password);
+        const isCorrectPassword = verifyPassword(user!.salt!, password, user!.password);
         if (!isCorrectPassword) {
             res.status(403).send({ message: "Email or Password incorrect" });
         }
@@ -96,25 +97,7 @@ export const findById = async (req: any, res: any) => {
     });
 }
 
-const isUserExisted = async (email: string) => {
+export const isUserExisted = async (email: string) => {
     return await Users.findOne({ email: email }).exec();
 }
 
-const createJWT = (id: string) => {
-    const TOKEN_SECRET = "pocsecret"; // This token must be store properly, with this a simple variable is dangerous.
-    const jwtMaxAge = 3 * 24 * 60 * 60;
-
-    return jwt.sign({id}, TOKEN_SECRET, {
-        expiresIn: jwtMaxAge,
-        algorithm: 'HS512'
-    });
-}
-
-const verifyJWT = (token: string) => {
-    const TOKEN_SECRET = "pocsecret"; // This token must be store properly, with this a simple variable is dangerous.
-    const jwtMaxAge = 3 * 24 * 60 * 60;
-    return jwt.verify(token, TOKEN_SECRET, {
-        maxAge: jwtMaxAge,
-        algorithms: ['HS512']
-    });
-}

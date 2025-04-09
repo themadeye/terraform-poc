@@ -1,20 +1,35 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 const Login = () => {
     const [input, setInput] = useState({
         email: "",
         password: "",
-        lastname: "",
-        firstname: ""
+        lastName: "",
+        firstName: ""
     });
 
-    const handleSubmitEvent = (e: any) => {
-        e.preventDefault();
-        if (input.email !== "" && input.password !== "") {
-            //dispatch action from hooks
+    const handleSubmitEvent = async (e: any) => {
+        const header = {
+            'Access-Control-Allow-Origin':'*',
+            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+            "Content-Type": "application/json"
         }
-        console.log("Input: ", input);
-        alert("please provide a valid input");
+        e.preventDefault();
+        if (input.email === "" || input.password === "" || input.lastName === "" || input.firstName === "") {
+            //dispatch action from hooks
+            alert('Please enter valid info!');
+            return;
+        }
+        console.log("input: ", input);
+        const url = `http://localhost:8081/api/users`;
+        const response = await axios.post(url, input, {
+            headers: header
+        });
+
+        console.log("Response: ", response);
+        localStorage.setItem('user', response.data.token);
+        return response.status;
     };
 
     const handleInput = (e: any) => {
@@ -57,22 +72,22 @@ const Login = () => {
                 </div>
             </div>
             <div className="form_control">
-                <label htmlFor="firstname">First name:</label>
+                <label htmlFor="firstName">First name:</label>
                 <input
-                    type="firstname"
-                    id="firstname"
-                    name="firstname"
+                    type="firstName"
+                    id="firstName"
+                    name="firstName"
                     aria-describedby="user-firstname"
                     aria-invalid="false"
                     onChange={handleInput}
                 />
             </div>
             <div className="form_control">
-                <label htmlFor="lastname">Last name:</label>
+                <label htmlFor="lastName">Last name:</label>
                 <input
-                    type="lastname"
-                    id="lastname"
-                    name="lastname"
+                    type="lastName"
+                    id="lastName"
+                    name="lastName"
                     aria-describedby="user-lastname"
                     aria-invalid="false"
                     onChange={handleInput}

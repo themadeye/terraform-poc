@@ -9,7 +9,8 @@ const createUserModel = () => {
             type: String,
             required: [true, 'Please enter an password'],
             minLength: [6, 'Mininum password length is 6 characters']
-        }
+        },
+        salt: String
     }, { timestamps: true });
 
     schema.method("toJSON", function() {

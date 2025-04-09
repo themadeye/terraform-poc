@@ -97,7 +97,7 @@ variable "is_data_explorer_enabled" {
    If true, Atlas enables Data Explorer for the specified project.
    HEREDOC
   type        = bool
-  default     = false
+  default     = true
 }
 variable "is_extended_storage_sizes_enabled" {
   description = <<HEREDOC
